@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-6">
+    <app-add-thread></app-add-thread>
+  </div>
+  <br />
+  <div class="col-md-6">
+    <app-update-thread [threadId]="selectedThreadId"></app-update-thread>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col-md-12">
+    <p><span>Selected Thread:</span><span>{{selectedThreadId}}</span></p>
+    <app-threads-list
+      (threadSelected)="updateThread($event)"
+    ></app-threads-list>
+  </div>
+</div>
