@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { ThreadsService } from './services/threads.service';
+import { ThreadsFacade } from './threads.facade';
 import { ThreadsEffects } from './store/effects';
 import { threadsReducers } from './store/reducers';
 import { ThreadsListComponent } from './components/threads-list/threads-list.component';
@@ -17,7 +18,7 @@ import { ThreadsComponent } from './threads.component';
     StoreModule.forFeature('threads', threadsReducers),
     EffectsModule.forFeature([ThreadsEffects]),
   ],
-  providers: [ThreadsService],
+  providers: [ThreadsService, ThreadsFacade],
   declarations: [ThreadsListComponent, AddThreadComponent, UpdateThreadComponent, ThreadsComponent],
   exports: [ThreadsComponent],
 })

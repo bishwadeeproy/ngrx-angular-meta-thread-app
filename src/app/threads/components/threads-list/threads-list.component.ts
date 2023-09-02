@@ -1,15 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Input, Output, EventEmitter } from "@angular/core";
-import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { AppState } from "src/app/core/state/app-state";
+
 import { Thread } from "../../models/thread.model";
-import * as ThreadsActions from "../../store/actions";
-import {
-  errorSelector,
-  isLoadingSelector,
-  getThreads,
-} from "../../store/selectors";
+import { ThreadsFacade } from "../../threads.facade";
 
 @Component({
   selector: "app-threads-list",
@@ -24,14 +18,14 @@ export class ThreadsListComponent implements OnInit {
   threads$: Observable<Thread[]>;
   slectedThreadId!: string;
 
-  constructor(private store: Store<AppState>) {
-    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
-    this.error$ = this.store.pipe(select(errorSelector));
-    this.threads$ = this.store.pipe(select(getThreads));
+  constructor(private threadsFacade: ThreadsFacade) {
+    this.isLoading$ = threadsFacade.isLoading$;
+    this.error$ = threadsFacade.error$;
+    this.threads$ = threadsFacade.threads$;
   }
 
   ngOnInit(): void {
-    this.store.dispatch(ThreadsActions.getThreads());
+    this.threadsFacade.loadAll();
   }
 
   onChange(e: any) {
